@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	httptraceutils "github.com/tcnksm/go-httptraceutils"
+	"github.com/tcnksm/go-httptraceutils"
 )
 
 func main() {
