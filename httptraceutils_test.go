@@ -21,7 +21,7 @@ func TestWithClientTraceLogger(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	ctx := WithClientTraceLogger(context.Background(), logger)
+	ctx := withClientTraceLogger(context.Background(), logger)
 	req = req.WithContext(ctx)
 
 	client := http.DefaultClient

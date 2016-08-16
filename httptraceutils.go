@@ -1,4 +1,9 @@
-// Package httptraceutils is helper tool for httptrace
+// Package httptraceutils is helper package for httptrace.
+//
+// Go 1.7 introduces net/http/httptrace package. That provides mechanisms for tracing within HTTP requests.
+// Since it only provides the low level struct to set hooks for various states of request,
+// you need to write logging or displaying part by yourself.
+// go-httptraceutils is a small helper package for logging out each hook info of httptrace.
 package httptraceutils
 
 import (
@@ -11,15 +16,13 @@ import (
 
 var defaultLogger = log.New(os.Stderr, "", log.LstdFlags)
 
-// WithClientTrace returns a new context based on the provided parent
-// ctx.
+// WithClientTrace wraps `httptrace.WithClientTrace` and
+// sets logging hook in each step function of `httptrace.ClientTrace`.
 func WithClientTrace(ctx context.Context) context.Context {
-	return WithClientTraceLogger(ctx, defaultLogger)
+	return withClientTraceLogger(ctx, defaultLogger)
 }
 
-// WithClientTrace returns a new context based on the provided parent
-// ctx.
-func WithClientTraceLogger(ctx context.Context, logger *log.Logger) context.Context {
+func withClientTraceLogger(ctx context.Context, logger *log.Logger) context.Context {
 	return httptrace.WithClientTrace(ctx, newClientTrace(logger))
 }
 
